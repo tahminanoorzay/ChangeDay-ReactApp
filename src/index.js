@@ -1,35 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
-let counter = 0;
-let date = new Date();
-
-function handleIncrease() {
-  counter++;
-  date.setDate(date.getDate() + 1);
-  updateUI();
-}
-
-function handleDecrase() {
-  counter--;
-  date.setDate(date.getDate() - 1);
-  updateUI();
-}
-
-function updateUI() {
-  document.getElementById("counter").innerHTML = `Counter : ${counter}`;
-  document.getElementById(
-    "day"
-  ).innerHTML = `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} `;
-}
-
 function App() {
+  const [date, setDate] = useState(new Date());
+  const [inputValue, setInputValue] = useState(1);
+
+  const handleIncrease = () => {
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() + inputValue);
+    setDate(newDate);
+  };
+
+  const handleDecrease = () => {
+    const newDate = new Date(date);
+    newDate.setDate(newDate.getDate() - inputValue);
+    setDate(newDate);
+  };
+
   return (
     <div>
-      <h1 id="counter">{`Counter : ${counter}`}</h1>
+      <h1>
+        Counter -
+        <input
+          type="number"
+          value={inputValue}
+          onChange={(e) => setInputValue(Number(e.target.value))}
+        />
+      </h1>
       <button onClick={handleIncrease}>+</button>
-      <button onClick={handleDecrase}>-</button>
+      <button onClick={handleDecrease}>-</button>
       <div id="day">{`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}, ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()} AM`}</div>
     </div>
   );
